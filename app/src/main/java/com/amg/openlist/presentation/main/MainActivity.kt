@@ -2,6 +2,7 @@ package com.amg.openlist.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.amg.openlist.databinding.ActivityMainBinding
 import com.amg.openlist.presentation.main.model.MovieUI
@@ -35,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             onShowMessage.observe(this@MainActivity) { message ->
                 showMessage(message)
             }
+
+            onShowLoading.observe(this@MainActivity) { isShow ->
+                showLoading(isShow)
+            }
         }
     }
 
@@ -49,6 +54,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun showMessage(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun showLoading(isShow: Boolean) {
+        with(binding) {
+            layoutLoading.isVisible = isShow
+            progressBarLoading.isIndeterminate = isShow
+        }
     }
 
 }

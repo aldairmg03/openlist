@@ -29,7 +29,11 @@ class MovieViewModel @Inject constructor(
     private val _showMessageMLD = MutableLiveData<String>()
     val onShowMessage: LiveData<String> get() = _showMessageMLD
 
+    private val _showLoadingMLD = MutableLiveData<Boolean>()
+    val onShowLoading: LiveData<Boolean> get() = _showLoadingMLD
+
     fun getTopRatedMovies() {
+        showLoading(true)
         val topRated = MovieConstants.CATEGORY_TOP_RATED
 
         viewModelScope.launch {
@@ -48,6 +52,7 @@ class MovieViewModel @Inject constructor(
                     )
                 }
                 _moviesMLD.value = moviesUI
+                showLoading(false)
             } else {
                 getRemoteTopRatedMovies(topRated)
             }
@@ -60,6 +65,7 @@ class MovieViewModel @Inject constructor(
                 getRemoteMoviesByCategoryUseCase.invoke(category)) {
                 is Result.Error -> {
                     _showMessageMLD.value = result.exception.message ?: ""
+                    showLoading(false)
                 }
                 is Result.Success -> {
                     val moviesResponse = result.data
@@ -77,6 +83,7 @@ class MovieViewModel @Inject constructor(
                     }
                     saveMoviesInLocalDB(moviesResponse, category)
                     _moviesMLD.value = movies
+                    showLoading(false)
                 }
             }
         }
@@ -96,6 +103,10 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch {
             saveMoviesInLocalDBUseCase.invoke(moviesEntity)
         }
+    }
+
+    private fun showLoading(isShow: Boolean) {
+        _showLoadingMLD.value = isShow
     }
 
 }
