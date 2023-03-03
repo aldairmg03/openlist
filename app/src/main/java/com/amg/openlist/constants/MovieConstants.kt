@@ -15,4 +15,8 @@ object MovieConstants {
         return BASE_POSTER_PATH + posterPath
     }
 
+    const val MOVIE_DATABASE = "movie_db"
+    const val MOVIE_SHARED_PREFERENCES = "movie_sp"
+    const val DB_HAVE_DATA_SHA = "local_data_available"
+
 }

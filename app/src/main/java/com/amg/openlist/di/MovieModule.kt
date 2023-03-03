@@ -1,5 +1,6 @@
 package com.amg.openlist.di
 
+import com.amg.openlist.data.local.MovieDao
 import com.amg.openlist.data.remote.MovieRemoteDS
 import com.amg.openlist.data.remote.MovieService
 import com.amg.openlist.data.repository.MovieRepository
@@ -24,6 +25,7 @@ object MovieModule {
     @Provides
     fun provideRepository(
         remoteDataSource: MovieRemoteDS,
-    ) = MovieRepository(remoteDataSource)
+        localDataSource: MovieDao
+    ) = MovieRepository(remoteDataSource, localDataSource)
 
 }
