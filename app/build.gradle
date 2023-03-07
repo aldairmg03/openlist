@@ -24,6 +24,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "API_URL", api_url
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -85,6 +89,8 @@ dependencies {
     //Glide
     implementation images.glide
     kapt images.glideCompiler
+
+    implementation androidx.splashScreen
 
     testImplementation testing.unitTestingJunit
     androidTestImplementation  testing.uiTestingJunit

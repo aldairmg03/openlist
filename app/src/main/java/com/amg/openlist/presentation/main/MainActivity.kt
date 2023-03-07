@@ -2,6 +2,7 @@ package com.amg.openlist.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.amg.openlist.databinding.ActivityMainBinding
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val splashScreen = installSplashScreen()
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -35,7 +39,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             onShowMessage.observe(this@MainActivity) { message ->
-                showMessage(message)
+                //showMessage(message)
+                showAlert()
             }
 
             onShowLoading.observe(this@MainActivity) { isShow ->
@@ -53,8 +58,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showData(movies: List<MovieUI>) {
-        val movieAdapter = MovieAdapter(movies)
+        val movieAdapter = MovieAdapter()
         binding.recyclerViewMovies.adapter = movieAdapter
+        movieAdapter.submitList(movies)
     }
 
     private fun getTopRatedMovies() {
@@ -70,6 +76,13 @@ class MainActivity : AppCompatActivity() {
             layoutLoading.isVisible = isShow
             progressBarLoading.isIndeterminate = isShow
         }
+    }
+
+    private fun showAlert() {
+        DialogMessage { dialog, _ ->
+            dialog.dismiss()
+            movieViewModel.retryGetMovies()
+        }.show(supportFragmentManager, "DialogMessage")
     }
 
 }

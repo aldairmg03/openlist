@@ -1,6 +1,7 @@
 package com.amg.openlist.di
 
 import androidx.annotation.NonNull
+import com.amg.openlist.BuildConfig
 import com.amg.openlist.constants.MovieConstants
 import com.amg.openlist.data.remote.MovieService
 import com.amg.openlist.data.remote.RequestInterceptor
@@ -24,7 +25,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(gson: Gson, @NonNull okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(MovieConstants.API_URL)
+            .baseUrl(BuildConfig.API_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

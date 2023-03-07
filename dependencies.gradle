@@ -25,6 +25,7 @@ ext {
     def testJunit = "4.13.2"
     def androidTestJunit = "1.1.3"
     def androidTestEspressoCore = "3.4.0"
+    def splashScreenVersion = "1.0.0-beta02"
 
     classPaths = [
             gradlePath      : "com.android.tools.build:gradle:$gradleVersion",
@@ -42,7 +43,8 @@ ext {
             activityKtx       : "androidx.activity:activity-ktx:$activityKtx",
             roomDb            : "androidx.room:room-runtime:$roomVersion",
             kaptRoomDb        : "androidx.room:room-compiler:$kaptRoomCompilerVersion",
-            roomKtx           : "androidx.room:room-ktx:$roomKtxVersion"
+            roomKtx           : "androidx.room:room-ktx:$roomKtxVersion",
+            splashScreen      : "androidx.core:core-splashscreen:$splashScreenVersion"
     ]
 
     google = [

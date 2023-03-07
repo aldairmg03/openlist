@@ -59,6 +59,10 @@ class MovieViewModel @Inject constructor(
         }
     }
 
+    fun retryGetMovies() {
+        getRemoteTopRatedMovies(MovieConstants.CATEGORY_TOP_RATED)
+    }
+
     private fun getRemoteTopRatedMovies(category: String) {
         viewModelScope.launch {
             when (val result =
